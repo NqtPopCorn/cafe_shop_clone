@@ -12,7 +12,7 @@ import javax.swing.table.DefaultTableModel;
 public class DlgChonNhaCungCap extends javax.swing.JDialog {
 
     private NhaCungCap nhaCungCapChon = null;
-    private NhaCungCapBUS nhaCungCapBUS = new NhaCungCapBUS();
+    private NhaCungCapBUS nhaCungCapBUS = NhaCungCapBUS.getInstance();
 
     public DlgChonNhaCungCap() {
         initComponents();
@@ -66,7 +66,8 @@ public class DlgChonNhaCungCap extends javax.swing.JDialog {
     }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
@@ -85,22 +86,21 @@ public class DlgChonNhaCungCap extends javax.swing.JDialog {
         jPanel1.add(jLabel1);
 
         tblNhaCungCap.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Mã", "Tên", "Địa chỉ", "Điện thoại", "Fax"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                new Object[][] {
+                        { null, null, null, null, null },
+                        { null, null, null, null, null },
+                        { null, null, null, null, null },
+                        { null, null, null, null, null }
+                },
+                new String[] {
+                        "Mã", "Tên", "Địa chỉ", "Điện thoại", "Fax"
+                }) {
+            boolean[] canEdit = new boolean[] {
+                    false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+                return canEdit[columnIndex];
             }
         });
         tblNhaCungCap.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
@@ -146,26 +146,29 @@ public class DlgChonNhaCungCap extends javax.swing.JDialog {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 512, Short.MAX_VALUE)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 512, Short.MAX_VALUE)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 285,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnChonNCCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonNCCActionPerformed
+    private void btnChonNCCActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnChonNCCActionPerformed
         int row = tblNhaCungCap.getSelectedRow();
         if (row < 0) {
             new Dialog("Chưa chọn nhà cung cấp!", Dialog.ERROR_DIALOG);
@@ -178,23 +181,23 @@ public class DlgChonNhaCungCap extends javax.swing.JDialog {
         String fax = tblNhaCungCap.getValueAt(row, 4) + "";
         nhaCungCapChon = new NhaCungCap(maNCC, tenNCC, diaChi, dienThoai, fax);
         this.dispose();
-    }//GEN-LAST:event_btnChonNCCActionPerformed
+    }// GEN-LAST:event_btnChonNCCActionPerformed
 
-    private void btnThemNCCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemNCCActionPerformed
+    private void btnThemNCCActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnThemNCCActionPerformed
         DlgThemNhaCungCap dlg = new DlgThemNhaCungCap();
         dlg.setVisible(true);
         if (dlg.getCheckThemNCC()) {
             loadTableNhaCungCap();
         }
-    }//GEN-LAST:event_btnThemNCCActionPerformed
+    }// GEN-LAST:event_btnThemNCCActionPerformed
 
-    private void btnSuaNCCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaNCCActionPerformed
+    private void btnSuaNCCActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnSuaNCCActionPerformed
         int row = tblNhaCungCap.getSelectedRow();
         if (row < 0) {
             new Dialog("Hãy chọn nhà cung cấp!", Dialog.ERROR_DIALOG);
             return;
         }
-        
+
         NhaCungCap ncc = new NhaCungCap();
         ncc.setMaNCC(Integer.parseInt(tblNhaCungCap.getValueAt(row, 0) + ""));
         ncc.setTenNCC(tblNhaCungCap.getValueAt(row, 1) + "");
@@ -207,7 +210,7 @@ public class DlgChonNhaCungCap extends javax.swing.JDialog {
         if (dlg.getCheckSuaNCC()) {
             loadTableNhaCungCap();
         }
-    }//GEN-LAST:event_btnSuaNCCActionPerformed
+    }// GEN-LAST:event_btnSuaNCCActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnChonNCC;

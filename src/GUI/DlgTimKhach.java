@@ -25,7 +25,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class DlgTimKhach extends JDialog {
 
-    private KhachHangBUS khachHangBUS = new KhachHangBUS();
+    private KhachHangBUS khachHangBUS = KhachHangBUS.getInstance();
     public static KhachHang khachHangTimDuoc = null;
 
     public DlgTimKhach() {
@@ -65,10 +65,10 @@ public class DlgTimKhach extends JDialog {
         dtmKhachHang.addColumn("Địa chỉ");
         dtmKhachHang.addColumn("SĐT");
         tblKhachHang = new Table(dtmKhachHang);
-        
+
         tblKhachHang.setDefaultEditor(Object.class, null);
         tblKhachHang.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        
+
         JScrollPane scrKhachHang = new JScrollPane(tblKhachHang);
         pnTable.add(scrKhachHang, BorderLayout.CENTER);
         con.add(pnTable, BorderLayout.CENTER);

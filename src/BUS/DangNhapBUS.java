@@ -22,18 +22,19 @@ public class DangNhapBUS {
         tk.setTenTK(user);
         tk.setMatKhau(password);
 
-        DangNhapDAO dangNhapDAO = new DangNhapDAO();
+        DangNhapDAO dangNhapDAO = DangNhapDAO.getInstance();
         TaiKhoan account = dangNhapDAO.dangNhap(tk);
         taiKhoanLogin = account;
 
         if (account == null) {
             new Dialog("Sai thông tin đăng nhập hoặc tài khoản đã bị khoá!", Dialog.ERROR_DIALOG);
         } else {
-            PhanQuyenBUS phanQuyenBUS = new PhanQuyenBUS();
+            PhanQuyenBUS phanQuyenBUS = PhanQuyenBUS.getInstance();
             phanQuyenBUS.kiemTraQuyen(account.getQuyen());
             xuLyGhiNhoDangNhap(user, password, selected);
             new Dialog("Đăng nhập thành công!", Dialog.SUCCESS_DIALOG);
-//            new Dialog("Vì tình hình dịch Covid phức tạp, cửa hàng chỉ thực hiện bán mang về!", Dialog.INFO_DIALOG);
+            // new Dialog("Vì tình hình dịch Covid phức tạp, cửa hàng chỉ thực hiện bán mang
+            // về!", Dialog.INFO_DIALOG);
         }
         return account;
     }
@@ -45,7 +46,8 @@ public class DangNhapBUS {
             String line = br.readLine();
             br.close();
             return line;
-        }catch (Exception e) {
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return "";
     }
@@ -60,6 +62,7 @@ public class DangNhapBUS {
             fw.write(user + " | " + password);
             fw.close();
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -72,7 +75,7 @@ public class DangNhapBUS {
         tk.setTenTK(user);
         tk.setMatKhau(password);
 
-        DangNhapDAO dangNhapDAO = new DangNhapDAO();
+        DangNhapDAO dangNhapDAO = DangNhapDAO.getInstance();
         TaiKhoan account = dangNhapDAO.dangNhap(tk);
 
         if (user.length() <= 0 || password.length() <= 0) {

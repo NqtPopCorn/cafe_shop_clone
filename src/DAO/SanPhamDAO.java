@@ -8,6 +8,17 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class SanPhamDAO {
+    private static SanPhamDAO instance;
+
+    public static SanPhamDAO getInstance() {
+        if (instance == null) {
+            instance = new SanPhamDAO();
+        }
+        return instance;
+    }
+
+    private SanPhamDAO() {
+    }
 
     public ArrayList<SanPham> getListSanPham() {
         try {
@@ -20,13 +31,13 @@ public class SanPhamDAO {
 
                 sp.setMaSP(rs.getInt(1));
                 sp.setTenSP(rs.getString(2));
-                
+
                 sp.setSoLuong(rs.getInt(3));
                 sp.setDonGia(rs.getInt(4));
-                
+
                 sp.setHinhAnh(rs.getString(5));
                 sp.setTrangThai(rs.getInt(6));
-                
+
                 sp.setMaLoai(rs.getInt(7));
 
                 dssp.add(sp);
@@ -49,13 +60,13 @@ public class SanPhamDAO {
 
                 sp.setMaSP(rs.getInt(1));
                 sp.setTenSP(rs.getString(2));
-                
+
                 sp.setSoLuong(rs.getInt(3));
                 sp.setDonGia(rs.getInt(4));
-                
+
                 sp.setHinhAnh(rs.getString(5));
                 sp.setTrangThai(rs.getInt(6));
-                
+
                 sp.setMaLoai(rs.getInt(7));
 
                 return sp;
@@ -78,13 +89,13 @@ public class SanPhamDAO {
 
                 sp.setMaSP(rs.getInt(1));
                 sp.setTenSP(rs.getString(2));
-                
+
                 sp.setSoLuong(rs.getInt(3));
                 sp.setDonGia(rs.getInt(4));
-                
+
                 sp.setHinhAnh(rs.getString(5));
                 sp.setTrangThai(rs.getInt(6));
-                
+
                 sp.setMaLoai(rs.getInt(7));
 
                 dssp.add(sp);
@@ -129,22 +140,22 @@ public class SanPhamDAO {
             String sql = "INSERT INTO sanpham(TenSP, SoLuong, DonGia, HinhAnh, TrangThai, loaiSanPham_MaLSP) "
                     + "VALUES (?, ?, ?, ?, 1, ?)";
             PreparedStatement pre = MyConnect.conn.prepareStatement(sql);
-            
+
             pre.setString(1, sp.getTenSP());
             pre.setInt(2, sp.getSoLuong());
-            
+
             pre.setInt(3, sp.getDonGia());
             pre.setString(4, sp.getHinhAnh());
-            
+
             pre.setInt(5, sp.getMaLoai());
-            
+
             pre.execute();
             return true;
         } catch (SQLException e) {
         }
         return false;
     }
-    
+
     public boolean xoaToanBoSP() {
         try {
             String sql = "DELETE FROM sanpham;";
@@ -177,12 +188,14 @@ public class SanPhamDAO {
     public boolean xoaSanPham(int maSP) {
         try {
             String sql = "UPDATE sanpham "
-                    + "SET TrangThai = 0"
+                    + "SET TrangThai = 0 "
                     + "WHERE MaSP=" + maSP;
+            System.out.println("xoa san pham: " + sql);
             Statement st = MyConnect.conn.createStatement();
             st.execute(sql);
             return true;
         } catch (SQLException e) {
+            e.printStackTrace();
         }
         return false;
     }
@@ -192,25 +205,25 @@ public class SanPhamDAO {
             String sql = "UPDATE sanpham SET "
                     + "TenSP=?, "
                     + "SoLuong=?, "
-                    + "DonGia=? "
+                    + "DonGia=?, "
                     + "HinhAnh=?, "
                     + "TrangThai=?, "
-                    + "loaiSanPham_MaLSP=?, "
+                    + "loaisanpham_MaLSP=? "
                     + "WHERE MaSP=?";
             PreparedStatement pre = MyConnect.conn.prepareStatement(sql);
-            
+            System.out.println("sua san pham: " + sp.toString());
             pre.setString(1, sp.getTenSP());
             pre.setInt(2, sp.getSoLuong());
-            
+            //
             pre.setInt(3, sp.getDonGia());
             pre.setString(4, sp.getHinhAnh());
-            
-            pre.setInt(5, sp.getTrangThai());
+
+            pre.setInt(5, 1);
             pre.setInt(6, sp.getMaLoai());
 
             pre.setInt(7, sp.getMaSP());
-            
-            pre.execute();
+
+            pre.executeUpdate();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();

@@ -9,6 +9,17 @@ import java.util.ArrayList;
 
 public class KhuyenMaiDAO {
 
+    private static KhuyenMaiDAO instance;
+
+    public static KhuyenMaiDAO getInstance() {
+        if (instance == null) {
+            instance = new KhuyenMaiDAO();
+        }
+        return instance;
+    }
+
+    private KhuyenMaiDAO() {
+    }
 
     public ArrayList<KhuyenMai> getDanhSachKhuyenMai() {
         try {

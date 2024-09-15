@@ -8,7 +8,19 @@ import DAO.PhanQuyenDAO;
 
 public class TaiKhoanBUS {
 
-    private TaiKhoanDAO taiKhoanDAO = new TaiKhoanDAO();
+    private TaiKhoanDAO taiKhoanDAO;
+
+    private static TaiKhoanBUS instance;
+
+    public static TaiKhoanBUS getInstance() {
+        if (instance == null)
+            instance = new TaiKhoanBUS();
+        return instance;
+    }
+
+    private TaiKhoanBUS() {
+        taiKhoanDAO = TaiKhoanDAO.getInstance();
+    }
 
     public String getTenDangNhapTheoMa(String ma) {
         int maNV = Integer.parseInt(ma);
@@ -32,7 +44,7 @@ public class TaiKhoanBUS {
 
     public void datLaiQuyen(String ma, String quyen) {
         int maNV = Integer.parseInt(ma);
-        boolean flag = taiKhoanDAO.datLaiQuyen(maNV, new PhanQuyenDAO().getMaQuyen(quyen));
+        boolean flag = taiKhoanDAO.datLaiQuyen(maNV, PhanQuyenDAO.getInstance().getMaQuyen(quyen));
         if (flag) {
             new Dialog("Đặt lại thành công!", Dialog.SUCCESS_DIALOG);
         } else {
@@ -51,7 +63,8 @@ public class TaiKhoanBUS {
             return false;
         }
         if (kiemTraTrungTenDangNhap(tenDangNhap)) {
-            Dialog dlg = new Dialog("Tên đăng nhập bị trùng! Có thể tài khoản bị khoá, thực hiện mở khoá?", Dialog.WARNING_DIALOG);
+            Dialog dlg = new Dialog("Tên đăng nhập bị trùng! Có thể tài khoản bị khoá, thực hiện mở khoá?",
+                    Dialog.WARNING_DIALOG);
             if (dlg.getAction() == Dialog.OK_OPTION) {
                 moKhoaTaiKhoan(ma);
                 return true;
@@ -60,10 +73,10 @@ public class TaiKhoanBUS {
         }
         boolean flag = taiKhoanDAO.themTaiKhoan(tenDangNhap, tenDangNhap);
         if (flag) {
-            
-            new NhanVienDAO().updateTaiKhoanNV(maNV, tenDangNhap);
-            taiKhoanDAO.themQuyen(taiKhoanDAO.getMaTK(tenDangNhap), new PhanQuyenDAO().getMaQuyen(quyen));
-            
+
+            NhanVienDAO.getInstance().updateTaiKhoanNV(maNV, tenDangNhap);
+            taiKhoanDAO.themQuyen(taiKhoanDAO.getMaTK(tenDangNhap), PhanQuyenDAO.getInstance().getMaQuyen(quyen));
+
             new Dialog("Cấp tài khoản thành công! Mật khẩu là " + tenDangNhap, Dialog.SUCCESS_DIALOG);
         } else {
             new Dialog("Cấp tài khoản thất bại! Tài khoản đã tồn tại", Dialog.ERROR_DIALOG);
@@ -83,7 +96,7 @@ public class TaiKhoanBUS {
 
     public void moKhoaTaiKhoan(String ma) {
         int maNV = Integer.parseInt(ma);
-        
+
         boolean flag = taiKhoanDAO.moKhoaTaiKhoan(maNV);
         if (flag) {
             new Dialog("Mở khoá tài khoản thành công!", Dialog.SUCCESS_DIALOG);
@@ -93,7 +106,7 @@ public class TaiKhoanBUS {
     }
 
     public boolean doiMatKhau(String matKhauCu, String matKhauMoi, String nhapLaiMatKhau) {
-        if(!matKhauMoi.equals(nhapLaiMatKhau)) {
+        if (!matKhauMoi.equals(nhapLaiMatKhau)) {
             new Dialog("Mật khẩu mới không khớp!", Dialog.ERROR_DIALOG);
             return false;
         }
@@ -105,7 +118,7 @@ public class TaiKhoanBUS {
         }
         return flag;
     }
-    
+
     public int getTrangThai(String maNV) {
         int ma = Integer.parseInt(maNV);
         return taiKhoanDAO.getTrangThai(ma);

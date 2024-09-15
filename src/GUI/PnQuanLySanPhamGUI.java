@@ -50,8 +50,8 @@ public class PnQuanLySanPhamGUI extends JPanel {
         addEventsSanPham();
     }
 
-    SanPhamBUS spBUS = new SanPhamBUS();
-    LoaiBUS loaiBUS = new LoaiBUS();
+    SanPhamBUS spBUS = SanPhamBUS.getInstance();
+    LoaiBUS loaiBUS = LoaiBUS.getInstance();
     final Color colorPanel = new Color(247, 247, 247);
     Table tblSanPham;
     DefaultTableModel dtmSanPham;
@@ -82,7 +82,7 @@ public class PnQuanLySanPhamGUI extends JPanel {
         JPanel pnThongTin = new TransparentPanel();
         pnThongTin.setLayout(new BoxLayout(pnThongTin, BoxLayout.X_AXIS));
 
-        //================PANEL INPUT=========
+        // ================PANEL INPUT=========
         JPanel pnTextField = new TransparentPanel();
         pnTextField.setLayout(new BoxLayout(pnTextField, BoxLayout.Y_AXIS));
         JLabel lblMa, lblTen, lblLoai, lblSoLuong, lblDonViTinh, lblDonGia;
@@ -145,7 +145,7 @@ public class PnQuanLySanPhamGUI extends JPanel {
 
         pnThongTin.add(pnTextField);
 
-        //=================PANEL ẢNH==========
+        // =================PANEL ẢNH==========
         JPanel pnAnh = new TransparentPanel();
         pnAnh.setLayout(new BoxLayout(pnAnh, BoxLayout.Y_AXIS));
 
@@ -219,10 +219,10 @@ public class PnQuanLySanPhamGUI extends JPanel {
 
         this.add(pnButton);
 
-        //============PANEL BẢNG===========
+        // ============PANEL BẢNG===========
         JPanel pnTable = new TransparentPanel(new BorderLayout());
-        //====================Bảng hàng hoá====================
-        //<editor-fold defaultstate="collapsed" desc="Bảng sản phẩm">
+        // ====================Bảng hàng hoá====================
+        // <editor-fold defaultstate="collapsed" desc="Bảng sản phẩm">
         dtmSanPham = new DefaultTableModel();
         dtmSanPham.addColumn("Mã SP");
         dtmSanPham.addColumn("Tên SP");
@@ -230,7 +230,7 @@ public class PnQuanLySanPhamGUI extends JPanel {
         dtmSanPham.addColumn("Đơn giá");
         dtmSanPham.addColumn("Số lượng");
         dtmSanPham.addColumn("");
-        
+
         tblSanPham = new Table(dtmSanPham);
         tblSanPham.setDefaultEditor(Object.class, null);
         tblSanPham.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -245,13 +245,13 @@ public class PnQuanLySanPhamGUI extends JPanel {
         columnModelBanHang.getColumn(2).setPreferredWidth(120);
         columnModelBanHang.getColumn(3).setPreferredWidth(85);
         columnModelBanHang.getColumn(4).setPreferredWidth(138);
-        
+
         columnModelBanHang.getColumn(5).setMinWidth(0);
         columnModelBanHang.getColumn(5).setMaxWidth(0);
         columnModelBanHang.getColumn(5).setWidth(0);
 
         JScrollPane scrTblSanPham = new JScrollPane(tblSanPham);
-        //</editor-fold>
+        // </editor-fold>
         pnTable.add(scrTblSanPham, BorderLayout.CENTER);
         this.add(pnTable);
 
@@ -367,9 +367,9 @@ public class PnQuanLySanPhamGUI extends JPanel {
         XuLyFileExcel nhapFile = new XuLyFileExcel();
         nhapFile.nhapExcel(tblSanPham);
 
-        SanPhamDAO spDAO = new SanPhamDAO();
+        SanPhamDAO spDAO = SanPhamDAO.getInstance();
         spDAO.xoaToanBoSP();
-        
+
         int row = tblSanPham.getRowCount();
         for (int i = 0; i < row; i++) {
             String ten = tblSanPham.getValueAt(i, 1) + "";
@@ -526,7 +526,7 @@ public class PnQuanLySanPhamGUI extends JPanel {
 
     private ImageIcon getAnhSP(String src) {
         src = src.trim().equals("") ? "default.png" : src;
-        //Xử lý ảnh
+        // Xử lý ảnh
         BufferedImage img = null;
         File fileImg = new File(src);
 

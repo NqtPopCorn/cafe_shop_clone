@@ -8,11 +8,21 @@ import java.util.ArrayList;
 
 public class SanPhamBUS {
 
-    private ArrayList<SanPham> listSanPham = null;
-    private SanPhamDAO spDAO = new SanPhamDAO();
+    private ArrayList<SanPham> listSanPham;
+    private SanPhamDAO spDAO;
 
-    public SanPhamBUS() {
-        docListSanPham();
+    private static SanPhamBUS instance;
+
+    public static SanPhamBUS getInstance() {
+        if (instance == null) {
+            instance = new SanPhamBUS();
+        }
+        return instance;
+    }
+
+    private SanPhamBUS() {
+        spDAO = SanPhamDAO.getInstance();
+        listSanPham = spDAO.getListSanPham();
     }
 
     public void docListSanPham() {
@@ -75,6 +85,8 @@ public class SanPhamBUS {
     }
 
     public void capNhatSoLuongSP(int ma, int soLuongMat) {
+        SanPham sp = getSanPham(ma + "");
+        sp.setSoLuong(sp.getSoLuong() + soLuongMat);
         spDAO.capNhatSoLuongSP(ma, soLuongMat);
     }
 
@@ -106,6 +118,7 @@ public class SanPhamBUS {
             sp.setHinhAnh(anh);
             sp.setDonGia(donGiaSP);
 
+            listSanPham.add(sp);
             if (spDAO.themSanPham(sp)) {
                 new Dialog("Thêm thành công!", Dialog.SUCCESS_DIALOG);
                 return true;
@@ -152,6 +165,7 @@ public class SanPhamBUS {
         }
 
         int maSP = Integer.parseInt(ma);
+        listSanPham.removeIf(sp -> sp.getMaSP() == maSP);
         if (spDAO.xoaSanPham(maSP)) {
             new Dialog("Xoá thành công!", Dialog.SUCCESS_DIALOG);
             return true;
@@ -190,8 +204,7 @@ public class SanPhamBUS {
                 return false;
             }
 
-            SanPham sp = new SanPham();
-            sp.setMaSP(maSP);
+            SanPham sp = getSanPham(ma);
             sp.setTenSP(ten);
             sp.setMaLoai(maLoai);
             sp.setSoLuong(soLuongSP);

@@ -30,7 +30,7 @@ public class PnQuanLyKhachHangGUI extends JPanel {
         addEvents();
     }
 
-    private KhachHangBUS khachHangBUS = new KhachHangBUS();
+    private KhachHangBUS khachHangBUS = KhachHangBUS.getInstance();
 
     final Color colorPanel = new Color(247, 247, 247);
     JButton btnReset;
@@ -48,9 +48,9 @@ public class PnQuanLyKhachHangGUI extends JPanel {
         int h = 844;
 
         /*
-        =========================================================================
-                                    PANEL KHÁCH HÀNG
-        =========================================================================
+         * =========================================================================
+         * PANEL KHÁCH HÀNG
+         * =========================================================================
          */
         JPanel pnKhachHang = new TransparentPanel();
         pnKhachHang.setLayout(new BoxLayout(pnKhachHang, BoxLayout.Y_AXIS));
@@ -66,7 +66,7 @@ public class PnQuanLyKhachHangGUI extends JPanel {
         pnTitle.add(btnReset);
         pnTopKH.add(pnTitle);
 
-        //======PANEL TEXT FIELD=======
+        // ======PANEL TEXT FIELD=======
         JPanel pnTextField = new TransparentPanel();
         pnTextField.setLayout(new BoxLayout(pnTextField, BoxLayout.Y_AXIS));
 
@@ -121,7 +121,7 @@ public class PnQuanLyKhachHangGUI extends JPanel {
         pnTopKH.add(pnTextField);
         pnKhachHang.add(pnTopKH);
 
-        //===============PANEL BUTTON=============
+        // ===============PANEL BUTTON=============
         JPanel pnButton = new TransparentPanel();
         btnThem = new JButton("Thêm");
         btnSua = new JButton("Lưu");
@@ -149,7 +149,7 @@ public class PnQuanLyKhachHangGUI extends JPanel {
         btnSua.setPreferredSize(btnSize);
         btnXoa.setPreferredSize(btnSize);
 
-        //====PANEL SEARCH=====
+        // ====PANEL SEARCH=====
         JPanel pnTimKiem = new TransparentPanel();
         JLabel lblTimKiem = new JLabel("Từ khoá tìm");
         lblTimKiem.setFont(font);
@@ -158,8 +158,8 @@ public class PnQuanLyKhachHangGUI extends JPanel {
         pnTimKiem.add(lblTimKiem);
         pnTimKiem.add(txtTukhoa);
         pnKhachHang.add(pnTimKiem);
-        
-        //=========================TABLE=====================
+
+        // =========================TABLE=====================
         dtmKhachHang = new DefaultTableModel();
         dtmKhachHang.addColumn("Mã KH");
         dtmKhachHang.addColumn("Tên");
@@ -297,7 +297,7 @@ public class PnQuanLyKhachHangGUI extends JPanel {
     }
 
     private void xuLyXoaKhachHang() {
-        if(khachHangBUS.xoaKhachHang(txtMa.getText()))
+        if (khachHangBUS.xoaKhachHang(txtMa.getText()))
             btnReset.doClick();
     }
 }

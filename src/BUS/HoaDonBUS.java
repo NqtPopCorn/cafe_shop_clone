@@ -9,9 +9,22 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class HoaDonBUS {
-
     private ArrayList<HoaDon> listHoaDon;
-    private HoaDonDAO hoaDonDAO = new HoaDonDAO();
+    private HoaDonDAO hoaDonDAO;
+
+    private static HoaDonBUS instance;
+
+    public static HoaDonBUS getInstance() {
+
+        if (instance == null)
+            instance = new HoaDonBUS();
+        return instance;
+    }
+
+    private HoaDonBUS() {
+        hoaDonDAO = HoaDonDAO.getInstance();
+        listHoaDon = hoaDonDAO.getListHoaDon();
+    }
 
     public ArrayList<HoaDon> getListHoaDon() {
         listHoaDon = hoaDonDAO.getListHoaDon();
@@ -63,9 +76,9 @@ public class HoaDonBUS {
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             Date minDate = sdf.parse(min);
             Date maxDate = sdf.parse(max);
-            
+
             sdf = new SimpleDateFormat("yyyy-MM-dd");
-            
+
             min = sdf.format(minDate) + " 00:00:00";
             max = sdf.format(maxDate) + " 23:59:59";
 

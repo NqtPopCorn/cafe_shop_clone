@@ -10,6 +10,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class LoaiDAO {
+    private static LoaiDAO instance;
+
+    public static LoaiDAO getInstance() {
+        if (instance == null) {
+            instance = new LoaiDAO();
+        }
+        return instance;
+    }
+
+    private LoaiDAO() {
+    }
 
     public ArrayList<LoaiSP> getDanhSachLoai() {
         try {
@@ -68,7 +79,7 @@ public class LoaiDAO {
             PreparedStatement pre = MyConnect.conn.prepareStatement(sql);
             pre.setString(1, ten);
             pre.setString(2, Mota);
-            
+
             int x = pre.executeUpdate();
             return x > 0 ? true : false;
         } catch (SQLException e) {

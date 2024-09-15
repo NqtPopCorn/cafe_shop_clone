@@ -5,7 +5,7 @@
  */
 package DTO;
 
-import java.util.ArrayList;
+import java.sql.ResultSet;
 
 /**
  * @author User
@@ -15,12 +15,13 @@ public class ThongKe {
     public int soLuongKH;
     public int soLuongNV;
     public int[] tongThuQuy;
-    public ArrayList<SanPham> topSanPhamBanChay;
+    public ResultSet topSanPhamBanChay;
 
     public ThongKe() {
     }
 
-    public ThongKe(int soLuongSP, int soLuongKH, int soLuongNV, int[] tongThuQuy, ArrayList<SanPham> topSanPhamBanChay) {
+    public ThongKe(int soLuongSP, int soLuongKH, int soLuongNV, int[] tongThuQuy,
+            ResultSet topSanPhamBanChay) {
         this.soLuongSP = soLuongSP;
         this.soLuongKH = soLuongKH;
         this.soLuongNV = soLuongNV;
@@ -72,11 +73,11 @@ public class ThongKe {
         return tong;
     }
 
-    public ArrayList<SanPham> getTopSanPhamBanChay() {
+    public ResultSet getTopSanPhamBanChay() {
         return topSanPhamBanChay;
     }
 
-    public void setTopSanPhamBanChay(ArrayList<SanPham> topSanPhamBanChay) {
+    public void setTopSanPhamBanChay(ResultSet topSanPhamBanChay) {
         this.topSanPhamBanChay = topSanPhamBanChay;
     }
 }

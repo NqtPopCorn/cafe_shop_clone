@@ -15,8 +15,21 @@ import java.util.ArrayList;
  */
 public class ThongKeBUS {
 
-    public ThongKeDAO thongKeDAO = new ThongKeDAO();
+    public ThongKeDAO thongKeDAO;
     private ArrayList<Double> doanhThuThang;
+
+    private static ThongKeBUS instance;
+
+    public static ThongKeBUS getInstance() {
+        if (instance == null)
+            instance = new ThongKeBUS();
+        return instance;
+    }
+
+    private ThongKeBUS() {
+        thongKeDAO = ThongKeDAO.getInstance();
+        doanhThuThang = new ArrayList<>();
+    }
 
     public ThongKe thongKe(int nam) {
         return thongKeDAO.getThongKe(nam);

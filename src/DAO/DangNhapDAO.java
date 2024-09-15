@@ -9,6 +9,18 @@ import java.sql.SQLException;
 
 public class DangNhapDAO {
 
+    private static DangNhapDAO instance;
+
+    private DangNhapDAO() {
+    }
+
+    public static DangNhapDAO getInstance() {
+        if (instance == null) {
+            instance = new DangNhapDAO();
+        }
+        return instance;
+    }
+
     public TaiKhoan dangNhap(TaiKhoan tk) {
         try {
             String sql = "SELECT * FROM taikhoan WHERE TenTaiKhoan=? AND MatKhau=? AND TrangThai=1";
@@ -20,7 +32,7 @@ public class DangNhapDAO {
             if (rs.next()) {
                 tkLogin = tk;
                 tkLogin.setMaTK(rs.getInt("MaTK"));
-                tkLogin.setQuyen(new TaiKhoanBUS().getQuyenTheoMa(rs.getInt("MaTK")+""));
+                tkLogin.setQuyen(TaiKhoanBUS.getInstance().getQuyenTheoMa(rs.getInt("MaTK") + ""));
             }
             return tkLogin;
         } catch (SQLException e) {

@@ -31,7 +31,7 @@ import javax.swing.table.TableColumnModel;
 public class DlgKM extends JDialog {
 
     public static KhuyenMai kmTimDuoc = null;
-    private KhuyenMaiBUS KhuyenMaiBUS = new KhuyenMaiBUS();
+    private KhuyenMaiBUS KhuyenMaiBUS = BUS.KhuyenMaiBUS.getInstance();
     private int tongTien = 0;
 
     public DlgKM(int tongTien) {
@@ -145,7 +145,7 @@ public class DlgKM extends JDialog {
             dieuKienst = dieuKienst.replace(",", "");
             int dieuKien = Integer.parseInt(dieuKienst);
 
-            if(dieuKien > tongTien) {
+            if (dieuKien > tongTien) {
                 new Dialog("Không đủ điều kiện áp dụng khuyến mãi này!", Dialog.ERROR_DIALOG);
                 return;
             }
@@ -170,7 +170,7 @@ public class DlgKM extends JDialog {
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     DecimalFormat dcf = new DecimalFormat(">###,###");
-    
+
     private void loadDataLenTable() {
         dtmKM.setRowCount(0);
         KhuyenMaiBUS.docDanhSach();
@@ -186,7 +186,7 @@ public class DlgKM extends JDialog {
             vec.add(km.getNgayKT());
 
             Date now = new Date();
-            
+
             try {
                 ngayBDdt = sdf.parse(km.getNgayBD());
                 ngayKTdt = sdf.parse(km.getNgayKT());

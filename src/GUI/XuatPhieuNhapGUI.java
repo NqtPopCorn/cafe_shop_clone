@@ -29,7 +29,7 @@ public class XuatPhieuNhapGUI extends javax.swing.JDialog {
         this.listCTPhieuNhap = listCTPhieuNhap;
 
         initComponents();
-        
+
         txtChiTiet.setEditable(false);
 
         for (CTPhieuNhap ctpn : this.listCTPhieuNhap) {
@@ -45,7 +45,8 @@ public class XuatPhieuNhapGUI extends javax.swing.JDialog {
     }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -88,31 +89,33 @@ public class XuatPhieuNhapGUI extends javax.swing.JDialog {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane1)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE)
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE));
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 4, Short.MAX_VALUE))
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 323,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 4, Short.MAX_VALUE)));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnXacNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacNhanActionPerformed
+    private void btnXacNhanActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnXacNhanActionPerformed
         checkNhap = true;
         btnXacNhan.setEnabled(false);
         btnInPhieu.setEnabled(true);
 
-        SanPhamBUS sanPhamBUS = new SanPhamBUS();
+        SanPhamBUS sanPhamBUS = SanPhamBUS.getInstance();
         ArrayList<SanPham> dssp = sanPhamBUS.getListSanPham();
 
         txtChiTiet.setContentType("text/html");
@@ -121,11 +124,11 @@ public class XuatPhieuNhapGUI extends javax.swing.JDialog {
         DecimalFormat dcf = new DecimalFormat("###,### VND");
 
         // Lưu Phiếu nhập trước để xíu lấy cái mã
-        PhieuNhapBUS phieuNhapBUS = new PhieuNhapBUS();
+        PhieuNhapBUS phieuNhapBUS = PhieuNhapBUS.getInstance();
         phieuNhapBUS.themPhieuNhap(nhaCungCap, nhanVien, tongTien);
 
         int maPN = phieuNhapBUS.getLastID();
-        CTPhieuNhapBUS ctPhieuNhapBUS = new CTPhieuNhapBUS();
+        CTPhieuNhapBUS ctPhieuNhapBUS = CTPhieuNhapBUS.getInstance();
 
         String hd = "<style> "
                 + "table {"
@@ -170,13 +173,13 @@ public class XuatPhieuNhapGUI extends javax.swing.JDialog {
             hd += "<td style='text-align:center;'>" + ctpn.getThanhTien() + "</td>";
             hd += "</tr>";
 
-            //===================================================
-            //===================LƯU CTPN VÀO DB=================
-            //===================================================
+            // ===================================================
+            // ===================LƯU CTPN VÀO DB=================
+            // ===================================================
             ctpn.setMaPN(maPN);
             ctPhieuNhapBUS.luuCTPhieuNhap(ctpn);
         }
-        
+
         hd += "<tr>";
         hd += "<td style='text-align:center;'>" + "</td>";
         hd += "<td style='text-align:left;'>" + "</td>";
@@ -189,17 +192,17 @@ public class XuatPhieuNhapGUI extends javax.swing.JDialog {
         hd += "<div style='text-align:center;'>==========================================</div><br/>";
 
         txtChiTiet.setText(hd);
-        
-        new Dialog("Xác nhận thành công!", Dialog.SUCCESS_DIALOG);
-    }//GEN-LAST:event_btnXacNhanActionPerformed
 
-    private void btnInPhieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInPhieuActionPerformed
+        new Dialog("Xác nhận thành công!", Dialog.SUCCESS_DIALOG);
+    }// GEN-LAST:event_btnXacNhanActionPerformed
+
+    private void btnInPhieuActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnInPhieuActionPerformed
         try {
             txtChiTiet.print();
         } catch (PrinterException e) {
         }
         this.dispose();
-    }//GEN-LAST:event_btnInPhieuActionPerformed
+    }// GEN-LAST:event_btnInPhieuActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnInPhieu;

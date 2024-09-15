@@ -8,6 +8,17 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class NhaCungCapDAO {
+    private static NhaCungCapDAO instance;
+
+    public static NhaCungCapDAO getInstance() {
+        if (instance == null) {
+            instance = new NhaCungCapDAO();
+        }
+        return instance;
+    }
+
+    private NhaCungCapDAO() {
+    }
 
     public ArrayList<NhaCungCap> getListNhaCungCap() {
         try {
@@ -76,7 +87,7 @@ public class NhaCungCapDAO {
             prep.setString(2, ncc.getDiaChi());
             prep.setString(3, ncc.getDienThoai());
             prep.setString(4, ncc.getFax());
-            
+
             prep.setInt(5, ncc.getMaNCC());
             result = prep.executeUpdate() > 0;
         } catch (SQLException ex) {

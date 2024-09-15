@@ -8,12 +8,22 @@ import java.util.ArrayList;
 
 public class CTHoaDonBUS {
 
-    private ArrayList<CTHoaDon> listCTHoaDon;
-    private CTHoaDonDAO ctHDDAO = new CTHoaDonDAO();
-    private HoaDonBUS hdBUS = new HoaDonBUS();
+    private static CTHoaDonBUS instance;
 
-    public CTHoaDonBUS() {
-        docListCTHoaDon();
+    public static CTHoaDonBUS getInstance() {
+        if (instance == null)
+            instance = new CTHoaDonBUS();
+        return instance;
+    }
+
+    private ArrayList<CTHoaDon> listCTHoaDon;
+    private CTHoaDonDAO ctHDDAO;
+    private HoaDonBUS hdBUS;
+
+    private CTHoaDonBUS() {
+        ctHDDAO = CTHoaDonDAO.getInstance();
+        hdBUS = HoaDonBUS.getInstance();
+        this.listCTHoaDon = ctHDDAO.getListCTHoaDon();
     }
 
     public void docListCTHoaDon() {
@@ -39,7 +49,7 @@ public class CTHoaDonBUS {
     public void addCTHoaDon(String maSP, String soLuong, String donGia, String thanhTien) {
         int ma = hdBUS.getMaHoaDonMoiNhat();
 
-        donGia = donGia.replace(",","");
+        donGia = donGia.replace(",", "");
         thanhTien = thanhTien.replace(",", "");
 
         CTHoaDon cthd = new CTHoaDon();

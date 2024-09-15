@@ -8,17 +8,27 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class KhachHangBUS {
+    private ArrayList<KhachHang> listKhachHang;
+    private KhachHangDAO khachHangDAO;
 
-    private ArrayList<KhachHang> listKhachHang = null;
-    private KhachHangDAO khachHangDAO = new KhachHangDAO();
+    private static KhachHangBUS instance;
+
+    public static KhachHangBUS getInstance() {
+        if (instance == null)
+            instance = new KhachHangBUS();
+        return instance;
+    }
+
+    private KhachHangBUS() {
+        khachHangDAO = KhachHangDAO.getInstance();
+        this.listKhachHang = khachHangDAO.getListKhachHang();
+    }
 
     public void docDanhSach() {
         this.listKhachHang = khachHangDAO.getListKhachHang();
     }
 
     public ArrayList<KhachHang> getListKhachHang() {
-        if (listKhachHang == null)
-            docDanhSach();
         return listKhachHang;
     }
 
@@ -93,7 +103,7 @@ public class KhachHangBUS {
         try {
             int maKH = Integer.parseInt(ma);
             Dialog dlg = new Dialog("Bạn có chắc chắn muốn xoá?", Dialog.WARNING_DIALOG);
-            if(dlg.getAction() == Dialog.CANCEL_OPTION)
+            if (dlg.getAction() == Dialog.CANCEL_OPTION)
                 return false;
             flag = khachHangDAO.deleteKhachHang(maKH);
         } catch (Exception e) {

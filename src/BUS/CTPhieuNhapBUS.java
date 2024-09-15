@@ -6,11 +6,20 @@ import java.util.ArrayList;
 
 public class CTPhieuNhapBUS {
 
-    private ArrayList<CTPhieuNhap> listPhieuNhap = null;
-    private CTPhieuNhapDAO ctPhieuNhapDAO = new CTPhieuNhapDAO();
+    private static CTPhieuNhapBUS instance;
 
-    public CTPhieuNhapBUS() {
-        docDanhSach();
+    public static CTPhieuNhapBUS getInstance() {
+        if (instance == null)
+            instance = new CTPhieuNhapBUS();
+        return instance;
+    }
+
+    private ArrayList<CTPhieuNhap> listPhieuNhap;
+    private CTPhieuNhapDAO ctPhieuNhapDAO;
+
+    private CTPhieuNhapBUS() {
+        ctPhieuNhapDAO = CTPhieuNhapDAO.getInstance();
+        this.listPhieuNhap = ctPhieuNhapDAO.getListCTPhieuNhap();
     }
 
     public void docDanhSach() {
@@ -23,21 +32,22 @@ public class CTPhieuNhapBUS {
         }
         return listPhieuNhap;
     }
-    
+
     public ArrayList<CTPhieuNhap> getListPhieuNhap(String maPN) {
         ArrayList<CTPhieuNhap> dsct = new ArrayList<>();
         int ma = Integer.parseInt(maPN);
-        
-        for(CTPhieuNhap ct: listPhieuNhap) {
-            if(ct.getMaPN() == ma) {
+
+        for (CTPhieuNhap ct : listPhieuNhap) {
+            if (ct.getMaPN() == ma) {
                 dsct.add(ct);
             }
         }
-        
+
         return dsct;
     }
 
     public boolean luuCTPhieuNhap(CTPhieuNhap ctpn) {
+        this.listPhieuNhap.add(ctpn);
         return ctPhieuNhapDAO.addCTPhieuNhap(ctpn);
     }
 }

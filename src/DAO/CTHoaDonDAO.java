@@ -18,13 +18,25 @@ import java.util.ArrayList;
  */
 public class CTHoaDonDAO {
 
+    private static CTHoaDonDAO instance;
+
+    public static CTHoaDonDAO getInstance() {
+        if (instance == null) {
+            instance = new CTHoaDonDAO();
+        }
+        return instance;
+    }
+
+    private CTHoaDonDAO() {
+    }
+
     public ArrayList<CTHoaDon> getListCTHoaDon() {
         ArrayList<CTHoaDon> dscthd = new ArrayList<>();
         try {
             String sql = "SELECT * FROM chitiethoadon";
             Statement stmt = MyConnect.conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
-            while(rs.next()) {
+            while (rs.next()) {
                 CTHoaDon cthd = new CTHoaDon();
                 cthd.setDonGia(rs.getInt(1));
                 cthd.setSoLuong(rs.getInt(2));
@@ -32,7 +44,7 @@ public class CTHoaDonDAO {
                 cthd.setMaSP(rs.getInt(4));
                 dscthd.add(cthd);
             }
-        } catch(SQLException ex) {
+        } catch (SQLException ex) {
         }
         return dscthd;
     }
@@ -40,10 +52,10 @@ public class CTHoaDonDAO {
     public ArrayList<CTHoaDon> getListCTHoaDonTheoMaHD(int maHD) {
         ArrayList<CTHoaDon> dscthd = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM chitiethoadon WHERE MaHD="+maHD;
+            String sql = "SELECT * FROM chitiethoadon WHERE MaHD=" + maHD;
             Statement stmt = MyConnect.conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
-            while(rs.next()) {
+            while (rs.next()) {
                 CTHoaDon cthd = new CTHoaDon();
                 cthd.setDonGia(rs.getInt(1));
                 cthd.setSoLuong(rs.getInt(2));
@@ -51,7 +63,7 @@ public class CTHoaDonDAO {
                 cthd.setMaSP(rs.getInt(4));
                 dscthd.add(cthd);
             }
-        } catch(SQLException ex) {
+        } catch (SQLException ex) {
             return null;
         }
         return dscthd;
@@ -60,19 +72,19 @@ public class CTHoaDonDAO {
     public ArrayList<CTHoaDon> getListCTHoaDonTheoMaSP(int maSP) {
         ArrayList<CTHoaDon> dscthd = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM chitiethoadon WHERE MaSP="+maSP;
+            String sql = "SELECT * FROM chitiethoadon WHERE MaSP=" + maSP;
             Statement stmt = MyConnect.conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
-            while(rs.next()) {
+            while (rs.next()) {
                 CTHoaDon cthd = new CTHoaDon();
                 cthd.setDonGia(rs.getInt(1));
                 cthd.setSoLuong(rs.getInt(2));
                 cthd.setMaHD(rs.getInt(3));
                 cthd.setMaSP(rs.getInt(4));
-                
+
                 dscthd.add(cthd);
             }
-        } catch(SQLException ex) {
+        } catch (SQLException ex) {
             return null;
         }
         return dscthd;
@@ -87,9 +99,9 @@ public class CTHoaDonDAO {
             prep.setInt(2, cthd.getSoLuong());
             prep.setInt(3, cthd.getMaHD());
             prep.setInt(4, cthd.getMaSP());
-            
+
             result = prep.executeUpdate() > 0;
-        } catch(SQLException ex) {
+        } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
         }
@@ -108,9 +120,9 @@ public class CTHoaDonDAO {
             prep.setInt(4, cthd.getDonGia());
             prep.setInt(5, maHD);
             prep.setInt(6, maSP);
-            
+
             result = prep.executeUpdate() > 0;
-        } catch(SQLException ex) {
+        } catch (SQLException ex) {
             return false;
         }
         return result;

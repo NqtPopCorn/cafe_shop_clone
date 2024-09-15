@@ -9,6 +9,18 @@ import java.util.ArrayList;
 
 public class CTPhieuNhapDAO {
 
+    private static CTPhieuNhapDAO instance;
+
+    public static CTPhieuNhapDAO getInstance() {
+        if (instance == null) {
+            instance = new CTPhieuNhapDAO();
+        }
+        return instance;
+    }
+
+    private CTPhieuNhapDAO() {
+    }
+
     public ArrayList<CTPhieuNhap> getListCTPhieuNhap() {
         ArrayList<CTPhieuNhap> dsctpn = new ArrayList<>();
         try {

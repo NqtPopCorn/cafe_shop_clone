@@ -8,9 +8,22 @@ import java.util.ArrayList;
 
 public class PhanQuyenBUS {
 
-    public static PhanQuyen quyenTK = null;
-    private PhanQuyenDAO phanQuyenDAO = new PhanQuyenDAO();
-    private ArrayList<PhanQuyen> listPhanQuyen = null;
+    public static PhanQuyen quyenTK;
+    private PhanQuyenDAO phanQuyenDAO;
+    private ArrayList<PhanQuyen> listPhanQuyen;
+
+    private static PhanQuyenBUS instance;
+
+    public static PhanQuyenBUS getInstance() {
+        if (instance == null)
+            instance = new PhanQuyenBUS();
+        return instance;
+    }
+
+    private PhanQuyenBUS() {
+        phanQuyenDAO = PhanQuyenDAO.getInstance();
+        this.listPhanQuyen = phanQuyenDAO.getListQuyen();
+    }
 
     public void docDanhSachQuyen() {
         this.listPhanQuyen = phanQuyenDAO.getListQuyen();
@@ -26,7 +39,8 @@ public class PhanQuyenBUS {
         return this.listPhanQuyen;
     }
 
-    public boolean suaQuyen(int maQuyen, String tenQuyen, int nhapHang, int sanPham, int nhanVien, int khachHang, int thongKe) {
+    public boolean suaQuyen(int maQuyen, String tenQuyen, int nhapHang, int sanPham, int nhanVien, int khachHang,
+            int thongKe) {
         PhanQuyen phanQuyen = new PhanQuyen(maQuyen, tenQuyen, nhapHang, sanPham, nhanVien, khachHang, thongKe);
         boolean flag = phanQuyenDAO.suaQuyen(phanQuyen);
         if (flag) {
@@ -41,7 +55,7 @@ public class PhanQuyenBUS {
         if (tenQuyen == null || tenQuyen.trim().equals("")) {
             return false;
         }
-        
+
         if (kiemTonTaiTraQuyen(tenQuyen)) {
             new Dialog("Thêm thất bại! Quyền đã tồn tại", Dialog.ERROR_DIALOG);
             return false;
@@ -60,11 +74,10 @@ public class PhanQuyenBUS {
     private boolean kiemTonTaiTraQuyen(String tenQuyen) {
         docDanhSachQuyen();
         for (PhanQuyen q : listPhanQuyen) {
-            
+
             if (q.getQuyen().equalsIgnoreCase(tenQuyen))
                 return true;
-            
-                
+
         }
         return false;
     }

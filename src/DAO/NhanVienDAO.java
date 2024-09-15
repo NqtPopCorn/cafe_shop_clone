@@ -9,6 +9,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class NhanVienDAO {
+    private static NhanVienDAO instance;
+
+    public static NhanVienDAO getInstance() {
+        if (instance == null) {
+            instance = new NhanVienDAO();
+        }
+        return instance;
+    }
+
+    private NhanVienDAO() {
+    }
 
     public ArrayList<NhanVien> getDanhSachNhanVien() {
         try {
@@ -74,16 +85,16 @@ public class NhanVienDAO {
         }
         return result;
     }
-    
+
     public boolean updateTaiKhoanNV(int maNV, String tenTaiKhoan) {
         boolean result = false;
         try {
             String sql = "UPDATE nhanvien SET MaTK=? WHERE MaNV=?";
             PreparedStatement pre = MyConnect.conn.prepareStatement(sql);
-            
-            pre.setInt(1, new TaiKhoanDAO().getMaTK(tenTaiKhoan));
+
+            pre.setInt(1, TaiKhoanDAO.getInstance().getMaTK(tenTaiKhoan));
             pre.setInt(2, maNV);
-            
+
             result = pre.executeUpdate() > 0;
         } catch (SQLException ex) {
             return false;
@@ -122,7 +133,7 @@ public class NhanVienDAO {
         }
         return result;
     }
-    
+
     public boolean deleteAllNhanVien() {
         boolean result = false;
         try {

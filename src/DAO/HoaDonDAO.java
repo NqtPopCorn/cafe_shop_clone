@@ -8,6 +8,17 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class HoaDonDAO {
+    private static HoaDonDAO instance;
+
+    public static HoaDonDAO getInstance() {
+        if (instance == null)
+            instance = new HoaDonDAO();
+        return instance;
+    }
+
+    private HoaDonDAO() {
+    }
+
     public ArrayList<HoaDon> getListHoaDon() {
         ArrayList<HoaDon> dshd = new ArrayList<>();
         try {
@@ -31,7 +42,7 @@ public class HoaDonDAO {
     }
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    
+
     public boolean addHoaDon(HoaDon hd) {
         boolean result = false;
         try {

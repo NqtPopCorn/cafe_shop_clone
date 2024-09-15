@@ -9,11 +9,20 @@ import java.util.regex.Pattern;
 
 public class NhaCungCapBUS {
 
-    private NhaCungCapDAO nhaCungCapDAO = new NhaCungCapDAO();
-    private ArrayList<NhaCungCap> listNhaCungCap = null;
+    private NhaCungCapDAO nhaCungCapDAO;
+    private ArrayList<NhaCungCap> listNhaCungCap;
 
-    public NhaCungCapBUS() {
-        docDanhSach();
+    private static NhaCungCapBUS instance;
+
+    public static NhaCungCapBUS getInstance() {
+        if (instance == null)
+            instance = new NhaCungCapBUS();
+        return instance;
+    }
+
+    private NhaCungCapBUS() {
+        nhaCungCapDAO = NhaCungCapDAO.getInstance();
+        this.listNhaCungCap = nhaCungCapDAO.getListNhaCungCap();
     }
 
     public void docDanhSach() {
@@ -95,7 +104,7 @@ public class NhaCungCapBUS {
         ncc.setDiaChi(diaChi);
         ncc.setDienThoai(dienThoai);
         ncc.setFax(fax);
-        
+
         boolean flag = nhaCungCapDAO.updateNCC(ncc);
 
         if (flag) {

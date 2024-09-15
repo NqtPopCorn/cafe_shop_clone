@@ -1,14 +1,20 @@
 package GUI;
 
+import BUS.SanPhamBUS;
 import BUS.ThongKeBUS;
+import DTO.SanPham;
 import DTO.ThongKe;
 import CustomFunctions.TransparentPanel;
+
+import org.apache.poi.ss.formula.functions.T;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
+
+import com.mysql.fabric.xmlrpc.base.Array;
 
 import javax.swing.*;
 
@@ -20,6 +26,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.ArrayList;
 
 public class PnQuanLyThongKeGUI extends JPanel {
 
@@ -29,7 +37,7 @@ public class PnQuanLyThongKeGUI extends JPanel {
         addEvents();
     }
 
-    ThongKeBUS thongKeBUS = new ThongKeBUS();
+    ThongKeBUS thongKeBUS = ThongKeBUS.getInstance();
     final Color colorPanel = new Color(56, 56, 56);
     JLabel lblThongKeThucDon, lblThongKeKhachHang, lblThongKeNhanVien, lblThongKeDoanhThu;
     JLabel lblDoanhThuQuy1, lblDoanhThuQuy2, lblDoanhThuQuy3, lblDoanhThuQuy4, lblTongDoanhThu;
@@ -48,14 +56,15 @@ public class PnQuanLyThongKeGUI extends JPanel {
         int w = 1030;
         int h = 844;
 
-        //========================================
+        // ========================================
         pnMain = new TransparentPanel();
         pnMain.setFont(new Font("Tahoma", Font.PLAIN, 18));
         pnMain.setLayout(cardLayoutThongKe);
 
         JPanel pnThongKeTong = new JPanel(null);
         pnThongKeTong.setBackground(colorPanel);
-        JLabel lblTileThongKeTong, lblBackgroundThucDon, lblBackgroundKhachHang, lblBackgroundNhanVien, lblBackgroundDoanhThu;
+        JLabel lblTileThongKeTong, lblBackgroundThucDon, lblBackgroundKhachHang, lblBackgroundNhanVien,
+                lblBackgroundDoanhThu;
 
         lblTileThongKeTong = new JLabel("THỐNG KÊ TỔNG QUÁT", JLabel.CENTER);
         lblTileThongKeTong.setFont(new Font("Tahoma", Font.BOLD, 28));
@@ -149,11 +158,11 @@ public class PnQuanLyThongKeGUI extends JPanel {
         cmbNam.setFont(new Font("Tahoma", Font.PLAIN, 18));
         cmbNam.setBounds(w / 2 - 100 / 2, 560, 120, 35);
         pnThongKeTong.add(cmbNam);
-        
+
         btn_filter = new JButton("Chi tiết");
         btn_filter.setFont(new Font("Tahoma", Font.PLAIN, 18));
         btn_filter.setBounds((w / 2 - 100 / 2) + 140, 560, 100, 35);
-//        pnThongKeTong.add(btn_filter);
+        // pnThongKeTong.add(btn_filter);
 
         JLabel lblBackgroundBang = new JLabel(new ImageIcon("image/ManagerUI/bangThongKe.png"));
         lblBackgroundBang.setBounds(98, 610, 834, 189);
@@ -162,7 +171,7 @@ public class PnQuanLyThongKeGUI extends JPanel {
         pnMain.add(pnThongKeTong, "1");
 
         // ==============================================
-        //              THỐNG KÊ CHI TIẾT
+        // THỐNG KÊ CHI TIẾT
         // ==============================================
         pnThongKeChiTiet = new TransparentPanel(null);
 
@@ -235,7 +244,7 @@ public class PnQuanLyThongKeGUI extends JPanel {
         pnThongKeChiTiet.add(lblSoLuong4);
         pnThongKeChiTiet.add(lblSoLuong5);
 
-        //========BIỂU ĐỒ CỘT=============
+        // ========BIỂU ĐỒ CỘT=============
         pnChart = new TransparentPanel();
         pnChart.setBounds(0, 398, 1030, 441);
 
@@ -243,7 +252,7 @@ public class PnQuanLyThongKeGUI extends JPanel {
         chartPanel.setPreferredSize(new Dimension(1030, 441));
 
         pnChart.add(chartPanel);
-        //================================
+        // ================================
         pnThongKeChiTiet.add(pnChart);
         pnMain.add(pnThongKeChiTiet, "2");
 
@@ -321,18 +330,22 @@ public class PnQuanLyThongKeGUI extends JPanel {
         lblDoanhThuQuy3.setText(dcf.format(thongKe.getTongThuQuy(3)));
         lblDoanhThuQuy4.setText(dcf.format(thongKe.getTongThuQuy(4)));
         lblTongDoanhThu.setText(dcf.format(thongKe.getTongDoanhThu()));
-        
-        if (thongKe.getTopSanPhamBanChay().size() > 0) {
-            lblMon1.setText(thongKe.getTopSanPhamBanChay().get(0).getTenSP());
-            lblMon2.setText(thongKe.getTopSanPhamBanChay().get(1).getTenSP());
-            lblMon3.setText(thongKe.getTopSanPhamBanChay().get(2).getTenSP());
-            lblMon4.setText(thongKe.getTopSanPhamBanChay().get(3).getTenSP());
-            lblMon5.setText(thongKe.getTopSanPhamBanChay().get(4).getTenSP());
-            lblSoLuong1.setText("" + thongKe.getTopSanPhamBanChay().get(0).getSoLuong());
-            lblSoLuong2.setText("" + thongKe.getTopSanPhamBanChay().get(1).getSoLuong());
-            lblSoLuong3.setText("" + thongKe.getTopSanPhamBanChay().get(2).getSoLuong());
-            lblSoLuong4.setText("" + thongKe.getTopSanPhamBanChay().get(3).getSoLuong());
-            lblSoLuong5.setText("" + thongKe.getTopSanPhamBanChay().get(4).getSoLuong());
+
+        JLabel lbls[] = { lblMon1, lblMon2, lblMon3, lblMon4, lblMon5 };
+        JLabel lbls_soluong[] = { lblSoLuong1, lblSoLuong2, lblSoLuong3, lblSoLuong4, lblSoLuong5 };
+        int i = 0;
+        SanPhamBUS sanPhamBUS = SanPhamBUS.getInstance();
+        java.sql.ResultSet rs = thongKe.topSanPhamBanChay;
+        try {
+            while (rs.next()) {
+                System.out.println(rs.getString(1) + " " + rs.getInt(2));
+                SanPham sp = sanPhamBUS.getSanPham(rs.getString(1));
+                lbls[i].setText(sp.getTenSP());
+                lbls_soluong[i].setText(rs.getInt(2) + "");
+                i++;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

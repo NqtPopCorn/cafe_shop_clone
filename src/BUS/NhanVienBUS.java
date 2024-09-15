@@ -10,11 +10,20 @@ import java.util.Date;
 
 public class NhanVienBUS {
 
-    private NhanVienDAO nvDAO = new NhanVienDAO();
-    private ArrayList<NhanVien> listNhanVien = null;
+    private NhanVienDAO nvDAO;
+    private ArrayList<NhanVien> listNhanVien;
 
-    public NhanVienBUS() {
-        docDanhSach();
+    private static NhanVienBUS instance;
+
+    public static NhanVienBUS getInstance() {
+        if (instance == null)
+            instance = new NhanVienBUS();
+        return instance;
+    }
+
+    private NhanVienBUS() {
+        nvDAO = NhanVienDAO.getInstance();
+        this.listNhanVien = nvDAO.getDanhSachNhanVien();
     }
 
     public void docDanhSach() {
@@ -28,7 +37,7 @@ public class NhanVienBUS {
     }
 
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-    
+
     public boolean themNhanVien(String ten, String ngaySinh, String diaChi, String sdt) {
         ten = ten.trim();
         ngaySinh = ngaySinh.trim();
@@ -41,7 +50,7 @@ public class NhanVienBUS {
             new Dialog("Số điện thoại không được để trống!", Dialog.ERROR_DIALOG);
             return false;
         }
-        
+
         NhanVien nv = new NhanVien();
         nv.setTen(ten);
         Date d;
@@ -86,7 +95,7 @@ public class NhanVienBUS {
         NhanVien nv = new NhanVien();
         nv.setMaNV(maNV);
         nv.setTen(ten);
-        
+
         Date d;
         sdf = new SimpleDateFormat("dd/MM/yyyy");
         try {
@@ -98,7 +107,7 @@ public class NhanVienBUS {
             sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             nv.setNgaySinh(sdf.format(d));
         }
-        
+
         nv.setDiaChi(diaChi);
         nv.setSdt(sdt);
         boolean flag = nvDAO.updateNhanVien(nv);

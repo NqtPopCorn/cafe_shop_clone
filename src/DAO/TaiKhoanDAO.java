@@ -9,6 +9,17 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class TaiKhoanDAO {
+    private static TaiKhoanDAO instance;
+
+    public static TaiKhoanDAO getInstance() {
+        if (instance == null) {
+            instance = new TaiKhoanDAO();
+        }
+        return instance;
+    }
+
+    private TaiKhoanDAO() {
+    }
 
     public boolean themTaiKhoan(String TenTaiKhoan, String MatKhau) {
         try {
@@ -22,18 +33,18 @@ public class TaiKhoanDAO {
         }
         return false;
     }
-    
+
     public int getMaTK(String TenTaiKhoan) {
         try {
             String sql = "SELECT MaTK FROM taikhoan WHERE TenTaiKhoan = ?";
             PreparedStatement pre = MyConnect.conn.prepareStatement(sql);
             pre.setString(1, TenTaiKhoan);
             ResultSet rs = pre.executeQuery();
-            
+
             if (rs.next()) {
                 return rs.getInt("MaTK");
             }
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -90,7 +101,7 @@ public class TaiKhoanDAO {
         }
         return false;
     }
-    
+
     public boolean datLaiQuyen(int maTK, int maQuyen) {
         try {
             String sql = "UPDATE quyentaikhoan SET MaQuyen=? WHERE MaTK=?";
@@ -105,25 +116,26 @@ public class TaiKhoanDAO {
 
     public String getQuyenTheoMa(int maTK) {
         try {
-            String sql = "SELECT TenQuyen FROM quyentaikhoan, phanquyen WHERE MaTK=" + maTK + " AND quyentaikhoan.MaQuyen = phanquyen.MaQuyen";
+            String sql = "SELECT TenQuyen FROM quyentaikhoan, phanquyen WHERE MaTK=" + maTK
+                    + " AND quyentaikhoan.MaQuyen = phanquyen.MaQuyen";
             Statement st = MyConnect.conn.createStatement();
             ResultSet rs = st.executeQuery(sql);
-            
+
             if (rs.next()) {
                 return rs.getString(1);
             }
-            
+
         } catch (Exception e) {
         }
         return "";
     }
-    
+
     public String getChiTietQuyen(int maQuyen) {
         try {
             String sql = "SELECT ChiTietQuyen FROM phanquyen WHERE MaQuyen=" + maQuyen;
             Statement st = MyConnect.conn.createStatement();
             ResultSet rs = st.executeQuery(sql);
-            
+
             if (rs.next()) {
                 return rs.getString(1);
             }

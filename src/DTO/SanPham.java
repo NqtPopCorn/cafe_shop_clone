@@ -78,4 +78,8 @@ public class SanPham {
     public void setTrangThai(int trangThai) {
         this.trangThai = trangThai;
     }
+    
+    public String toString() {
+        return String.format("Ten: %s, ma: %d, sl: %d", this.tenSP, this.maSP, this.soLuong);
+    }
 }

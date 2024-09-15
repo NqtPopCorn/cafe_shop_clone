@@ -17,6 +17,17 @@ import java.util.ArrayList;
  * @author User
  */
 public class KhachHangDAO {
+    private static KhachHangDAO instance;
+
+    public static KhachHangDAO getInstance() {
+        if (instance == null) {
+            instance = new KhachHangDAO();
+        }
+        return instance;
+    }
+
+    private KhachHangDAO() {
+    }
 
     public ArrayList<KhachHang> getListKhachHang() {
         try {
@@ -67,7 +78,7 @@ public class KhachHangDAO {
             prep.setString(2, kh.getTen());
             prep.setString(3, kh.getDiaChi());
             prep.setString(4, kh.getSdt());
-            
+
             result = prep.executeUpdate() > 0;
         } catch (SQLException ex) {
             return false;
@@ -91,7 +102,7 @@ public class KhachHangDAO {
     public boolean updateKhachHang(int maKH, KhachHang kh) {
         boolean result = false;
         try {
-                String sql = "UPDATE khachhang SET TenKH=?, DiaChi=?, SDT=? WHERE MaKH=?";
+            String sql = "UPDATE khachhang SET TenKH=?, DiaChi=?, SDT=? WHERE MaKH=?";
             PreparedStatement prep = MyConnect.conn.prepareStatement(sql);
             prep.setString(1, kh.getTen());
             prep.setString(2, kh.getDiaChi());

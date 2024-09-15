@@ -30,7 +30,7 @@ public class PnQuanLyKhuyenMaiGUI extends JPanel {
         addEvents();
     }
 
-    private KhuyenMaiBUS KhuyenMaiBUS = new KhuyenMaiBUS();
+    private KhuyenMaiBUS KhuyenMaiBUS = BUS.KhuyenMaiBUS.getInstance();
     final Color colorPanel = new Color(247, 247, 247);
 
     JButton btnReset, btnThem, btnSua;
@@ -47,8 +47,8 @@ public class PnQuanLyKhuyenMaiGUI extends JPanel {
         int w = 1030;
         int h = 844;
 
-        //=================MAIN PANEL=================
-        //=====TITLE====
+        // =================MAIN PANEL=================
+        // =====TITLE====
         JPanel pnMain = new TransparentPanel();
         pnMain.setLayout(new BoxLayout(pnMain, BoxLayout.Y_AXIS));
 
@@ -61,7 +61,7 @@ public class PnQuanLyKhuyenMaiGUI extends JPanel {
         pnTitle.add(btnReset);
         pnMain.add(pnTitle);
 
-        //========TEXTFIELD=========
+        // ========TEXTFIELD=========
         JPanel pnTextField = new TransparentPanel();
         pnTextField.setLayout(new BoxLayout(pnTextField, BoxLayout.Y_AXIS));
 
@@ -144,7 +144,7 @@ public class PnQuanLyKhuyenMaiGUI extends JPanel {
         dateBD.setPreferredSize(txtDieuKien.getPreferredSize());
         dateKT.setPreferredSize(txtDieuKien.getPreferredSize());
 
-        //==========BUTTON PANEL===============
+        // ==========BUTTON PANEL===============
         JPanel pnButton = new TransparentPanel();
         btnThem = new JButton("Thêm");
         btnSua = new JButton("Sửa");
@@ -157,7 +157,7 @@ public class PnQuanLyKhuyenMaiGUI extends JPanel {
         pnMain.add(pnButton);
         btnSua.setPreferredSize(btnThem.getPreferredSize());
 
-        //======================TABLE======================
+        // ======================TABLE======================
         JPanel pnTable = new TransparentPanel(new BorderLayout());
         dtmKhuyenMai = new DefaultTableModel();
         dtmKhuyenMai.addColumn("Mã KM");
@@ -171,7 +171,7 @@ public class PnQuanLyKhuyenMaiGUI extends JPanel {
         tblKhuyenMai = new Table(dtmKhuyenMai);
         tblKhuyenMai.setDefaultEditor(Object.class, null);
         tblKhuyenMai.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        
+
         JScrollPane scrTblKhuyenMai = new JScrollPane(tblKhuyenMai);
 
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
@@ -242,15 +242,14 @@ public class PnQuanLyKhuyenMaiGUI extends JPanel {
 
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     DecimalFormat dcf = new DecimalFormat(">###,###");
-    
+
     private void loadDataTblKhuyenMai() {
         dtmKhuyenMai.setRowCount(0);
         KhuyenMaiBUS.docDanhSach();
         ArrayList<KhuyenMai> dsg = KhuyenMaiBUS.getDanhSachKhuyenMai();
-        
-        
+
         Date ngayBD, ngayKT;
-        
+
         for (KhuyenMai km : dsg) {
             Vector vec = new Vector();
             vec.add(km.getMaKM());
@@ -261,7 +260,7 @@ public class PnQuanLyKhuyenMaiGUI extends JPanel {
             vec.add(km.getNgayKT());
 
             Date now = new Date();
-            
+
             try {
                 ngayBD = sdf.parse(km.getNgayBD());
                 ngayKT = sdf.parse(km.getNgayKT());
@@ -271,7 +270,7 @@ public class PnQuanLyKhuyenMaiGUI extends JPanel {
                     vec.add("Hết hiệu lực");
                 }
 
-            }  catch (Exception ex) {
+            } catch (Exception ex) {
                 vec.add("Không xác định");
             }
             dtmKhuyenMai.addRow(vec);
@@ -296,7 +295,7 @@ public class PnQuanLyKhuyenMaiGUI extends JPanel {
             txtTen.setText(ten);
             txtPhanTram.setText(phanTram);
             txtDieuKien.setText(dieuKien);
-            
+
             try {
                 ngayBD = sdf.parse(start);
                 ngayKT = sdf.parse(end);
@@ -308,13 +307,15 @@ public class PnQuanLyKhuyenMaiGUI extends JPanel {
     }
 
     private void xuLyThemKhuyenMai() {
-        boolean flag = KhuyenMaiBUS.themKhuyenMai(txtTen.getText(), txtPhanTram.getText(), txtDieuKien.getText(), sdf.format(dateBD.getDate()), sdf.format(dateKT.getDate()));
+        boolean flag = KhuyenMaiBUS.themKhuyenMai(txtTen.getText(), txtPhanTram.getText(), txtDieuKien.getText(),
+                sdf.format(dateBD.getDate()), sdf.format(dateKT.getDate()));
         if (flag)
             loadDataTblKhuyenMai();
     }
 
     private void xuLySuaKhuyenMai() {
-        boolean flag = KhuyenMaiBUS.suaKhuyenMai(txtMa.getText(), txtTen.getText(), txtPhanTram.getText(), txtDieuKien.getText(), sdf.format(dateBD.getDate()), sdf.format(dateKT.getDate()));
+        boolean flag = KhuyenMaiBUS.suaKhuyenMai(txtMa.getText(), txtTen.getText(), txtPhanTram.getText(),
+                txtDieuKien.getText(), sdf.format(dateBD.getDate()), sdf.format(dateKT.getDate()));
         if (flag)
             loadDataTblKhuyenMai();
     }

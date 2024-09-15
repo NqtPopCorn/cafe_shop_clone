@@ -21,7 +21,8 @@ public class MyConnect {
     public MyConnect() {
         docFileText();
 
-        String strConnect = "jdbc:mysql://" + severName + "/" + dbName + "?useUnicode=true&characterEncoding=utf-8";
+        String strConnect = "jdbc:mysql://" + severName + ":3306" + "/" + dbName
+                + "?useUnicode=true&characterEncoding=utf-8";
         Properties pro = new Properties();
         pro.put("user", userName);
         pro.put("password", password);

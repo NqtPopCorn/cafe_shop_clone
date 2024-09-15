@@ -7,11 +7,20 @@ import java.util.ArrayList;
 
 public class LoaiBUS {
 
-    private LoaiDAO loaiDAO = new LoaiDAO();
-    private ArrayList<LoaiSP> listLoai = null;
-    
-    public LoaiBUS() {
-        docDanhSachLoai();
+    private LoaiDAO loaiDAO;
+    private ArrayList<LoaiSP> listLoai;
+
+    private static LoaiBUS instance;
+
+    public static LoaiBUS getInstance() {
+        if (instance == null)
+            instance = new LoaiBUS();
+        return instance;
+    }
+
+    private LoaiBUS() {
+        loaiDAO = LoaiDAO.getInstance();
+        this.listLoai = loaiDAO.getDanhSachLoai();
     }
 
     public void docDanhSachLoai() {

@@ -9,11 +9,20 @@ import java.util.Date;
 
 public class PhieuNhapBUS {
 
-    private PhieuNhapDAO phieuNhapDAO = new PhieuNhapDAO();
-    private ArrayList<PhieuNhap> listPhieuNhap = null;
+    private PhieuNhapDAO phieuNhapDAO;
+    private ArrayList<PhieuNhap> listPhieuNhap;
 
-    public PhieuNhapBUS() {
-        docDanhSach();
+    private static PhieuNhapBUS instance;
+
+    public static PhieuNhapBUS getInstance() {
+        if (instance == null)
+            instance = new PhieuNhapBUS();
+        return instance;
+    }
+
+    private PhieuNhapBUS() {
+        phieuNhapDAO = PhieuNhapDAO.getInstance();
+        this.listPhieuNhap = phieuNhapDAO.getListPhieuNhap();
     }
 
     public void docDanhSach() {
@@ -83,20 +92,20 @@ public class PhieuNhapBUS {
         String minSt, maxSt;
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            
+
             min = sdf.parse(tuNgay);
             max = sdf.parse(denNgay);
-            
+
             sdf = new SimpleDateFormat("yyyy-MM-dd");
-            
+
             minSt = sdf.format(min);
             maxSt = sdf.format(max);
-            
+
             sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            
+
             min = sdf.parse(minSt + " 00:00:00");
             max = sdf.parse(maxSt + " 23:59:59");
-            
+
             if (max.before(min)) {
                 new Dialog("Hãy nhập khoảng ngày phù hợp theo định dạng dd/MM/yyyy!", Dialog.ERROR_DIALOG);
                 return null;

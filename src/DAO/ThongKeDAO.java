@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -20,6 +21,18 @@ import java.util.ArrayList;
  * @author User
  */
 public class ThongKeDAO {
+    private static ThongKeDAO instance;
+
+    public static ThongKeDAO getInstance() {
+        if (instance == null) {
+            instance = new ThongKeDAO();
+        }
+        return instance;
+    }
+
+    private ThongKeDAO() {
+    }
+
     public ThongKe getThongKe(int nam) {
         ThongKe thongKe = new ThongKe();
         int[] tongThuQuy = new int[4];
@@ -35,27 +48,14 @@ public class ThongKeDAO {
         return thongKe;
     }
 
-    private ArrayList<SanPham> getTopBanChay() {
+    private ResultSet getTopBanChay() {
         try {
-            String sql = "SELECT MaSP, DaBan FROM (" +
-                    "SELECT MaSP, SUM(SoLuong) AS DaBan FROM " +
-                    "chitiethoadon GROUP BY MaSP" +
-                    ") temp " +
-                    "ORDER BY DaBan " +
-                    "DESC LIMIT 5";
+            String sql = "SELECT MaSP, DaBan FROM (SELECT MaSP, SUM(SoLuong) AS DaBan FROM chitiethoadon GROUP BY MaSP) temp ORDER BY DaBan DESC LIMIT 5";
             Statement st = MyConnect.conn.createStatement();
             ResultSet rs = st.executeQuery(sql);
-            ArrayList<SanPham> dssp = new ArrayList<>();
-            SanPhamBUS spBUS = new SanPhamBUS();
-            while (rs.next()) {
-                SanPham sp = new SanPham();
-                sp.setMaSP(rs.getInt(1));
-                sp.setSoLuong(rs.getInt(2));
-                sp.setTenSP(spBUS.getTenSP(sp.getMaSP()));
-                dssp.add(sp);
-            }
-            return dssp;
+            return rs;
         } catch (Exception e) {
+            e.printStackTrace();
         }
         return null;
     }
@@ -73,44 +73,39 @@ public class ThongKeDAO {
         return 0;
     }
 
-    private String[] getDateString(int nam, int quy) {
-        int namBatDau = nam;
-        int namKetThuc = nam;
-        String thangBatDau = "01"; //kiểu String do có số 0 ở phía trước
-        String thangKetThuc = "04"; //kiểu String do có số 0 ở phía trước
+    private String[] thangTrongQuy(int quy) {
         String[] kq = new String[2];
         switch (quy) {
             case 1:
-                thangBatDau = "01";
-                thangKetThuc = "04";
+                kq[0] = "1";
+                kq[1] = "3";
                 break;
             case 2:
-                thangBatDau = "03";
-                thangKetThuc = "07";
+                kq[0] = "4";
+                kq[1] = "6";
                 break;
             case 3:
-                thangBatDau = "06";
-                thangKetThuc = "10";
+                kq[0] = "7";
+                kq[1] = "9";
                 break;
             case 4:
-                thangBatDau = "09";
-                thangKetThuc = "01";
-                namKetThuc++;
+                kq[0] = "10";
+                kq[1] = "12";
+                break;
+            default:
+                break;
         }
-        String strBatDau = Integer.toString(namBatDau) + thangBatDau + "01";
-        String strKetThuc = Integer.toString(namKetThuc) + thangKetThuc + "01";
-        kq[0] = strBatDau;
-        kq[1] = strKetThuc;
         return kq;
     }
 
     private int getTongThuQuy(int nam, int quy) {
-        String[] dateString = getDateString(nam, quy);
+        String[] thangTrongQuy = thangTrongQuy(quy);
         try {
             PreparedStatement prep = MyConnect.conn.prepareStatement("SELECT SUM(TongTien) FROM hoadon "
-                    + "WHERE NgayLap >= ? AND NgayLap < ?");
-            prep.setString(1, dateString[0]);
-            prep.setString(2, dateString[1]);
+                    + "WHERE MONTH(NgayLap) BETWEEN ? AND ? AND YEAR(NgayLap) = ?");
+            prep.setString(1, thangTrongQuy[0]);
+            prep.setString(2, thangTrongQuy[1]);
+            prep.setInt(3, nam);
             ResultSet rs = prep.executeQuery();
             while (rs.next()) {
                 return rs.getInt(1);

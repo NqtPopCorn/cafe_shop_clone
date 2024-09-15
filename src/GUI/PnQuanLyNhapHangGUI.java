@@ -33,10 +33,10 @@ public class PnQuanLyNhapHangGUI extends javax.swing.JPanel {
         loadDataTableCTPhieuNhap();
     }
 
-    private SanPhamBUS sanPhamBUS = new SanPhamBUS();
-    private NhanVienBUS nhanVienBUS = new NhanVienBUS();
-    private PhieuNhapBUS phieuNhapBUS = new PhieuNhapBUS();
-    private CTPhieuNhapBUS ctPhieuNhapBUS = new CTPhieuNhapBUS();
+    private SanPhamBUS sanPhamBUS = SanPhamBUS.getInstance();
+    private NhanVienBUS nhanVienBUS = NhanVienBUS.getInstance();
+    private PhieuNhapBUS phieuNhapBUS = PhieuNhapBUS.getInstance();
+    private CTPhieuNhapBUS ctPhieuNhapBUS = CTPhieuNhapBUS.getInstance();
     private DefaultTableModel dtmKho, dtmGioNhap, dtmPhieuNhap, dtmCTPhieuNhap;
 
     private void customControls() {
@@ -45,7 +45,7 @@ public class PnQuanLyNhapHangGUI extends javax.swing.JPanel {
         dtmKho.addColumn("Tên SP");
         dtmKho.addColumn("Tồn kho");
         tblKho.setModel(dtmKho);
-        
+
         tblKho.setDefaultEditor(Object.class, null);
         tblKho.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
@@ -56,7 +56,7 @@ public class PnQuanLyNhapHangGUI extends javax.swing.JPanel {
         dtmGioNhap.addColumn("Đơn giá");
         dtmGioNhap.addColumn("Thành tiền");
         tblGioNhap.setModel(dtmGioNhap);
-        
+
         tblGioNhap.setDefaultEditor(Object.class, null);
         tblGioNhap.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
@@ -88,18 +88,18 @@ public class PnQuanLyNhapHangGUI extends javax.swing.JPanel {
         });
         btnTimKiem.setVisible(false);
 
-        //====================================================================
-        //====================================================================
-        //====================================================================
-        //====================================================================
-        //====================================================================
+        // ====================================================================
+        // ====================================================================
+        // ====================================================================
+        // ====================================================================
+        // ====================================================================
         dtmPhieuNhap = new DefaultTableModel();
         dtmPhieuNhap.addColumn("Mã PN");
         dtmPhieuNhap.addColumn("Thời gian nhập");
         dtmPhieuNhap.addColumn("Tổng tiền");
         tblPhieuNhap.setModel(dtmPhieuNhap);
         tblPhieuNhap.getColumnModel().getColumn(0).setPreferredWidth(20);
-        
+
         tblPhieuNhap.setDefaultEditor(Object.class, null);
         tblPhieuNhap.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
@@ -113,9 +113,9 @@ public class PnQuanLyNhapHangGUI extends javax.swing.JPanel {
         tblCTPhieuNhap.setDefaultEditor(Object.class, null);
         tblCTPhieuNhap.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        //=========================================================
-        //================CENTER CÁC CELL CỦA TABLE================
-        //=========================================================
+        // =========================================================
+        // ================CENTER CÁC CELL CỦA TABLE================
+        // =========================================================
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
 
@@ -134,6 +134,7 @@ public class PnQuanLyNhapHangGUI extends javax.swing.JPanel {
     }
 
     @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -371,7 +372,7 @@ public class PnQuanLyNhapHangGUI extends javax.swing.JPanel {
                     .addComponent(scrTblKho)
                     .addGroup(pnTableLayout.createSequentialGroup()
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 647, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(24, Short.MAX_VALUE))
+                        .addContainerGap(18, Short.MAX_VALUE))
                     .addComponent(scrTblGioNhap)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -383,7 +384,7 @@ public class PnQuanLyNhapHangGUI extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrTblKho, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
+                .addComponent(scrTblKho, javax.swing.GroupLayout.DEFAULT_SIZE, 334, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -446,6 +447,7 @@ public class PnQuanLyNhapHangGUI extends javax.swing.JPanel {
 
         btnXoaKhoiGio.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnXoaKhoiGio.setText("Xoá");
+        btnXoaKhoiGio.setMinimumSize(null);
         btnXoaKhoiGio.setPreferredSize(new java.awt.Dimension(141, 41));
         btnXoaKhoiGio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -601,7 +603,7 @@ public class PnQuanLyNhapHangGUI extends javax.swing.JPanel {
         );
         pnNhapHangLayout.setVerticalGroup(
             pnNhapHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnTable, javax.swing.GroupLayout.DEFAULT_SIZE, 813, Short.MAX_VALUE)
+            .addComponent(pnTable, javax.swing.GroupLayout.DEFAULT_SIZE, 808, Short.MAX_VALUE)
             .addComponent(pnThongTin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -748,7 +750,7 @@ public class PnQuanLyNhapHangGUI extends javax.swing.JPanel {
             .addGroup(pnPhieuNhapLayout.createSequentialGroup()
                 .addComponent(jPanel22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel18, javax.swing.GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE)
+                .addComponent(jPanel18, javax.swing.GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel24, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -936,9 +938,10 @@ public class PnQuanLyNhapHangGUI extends javax.swing.JPanel {
 
     private void loadDataTableCTPhieuNhap(String maPN) {
         dtmCTPhieuNhap.setRowCount(0);
-        ArrayList<CTPhieuNhap> dsct = ctPhieuNhapBUS.getListPhieuNhap(maPN);
+        ArrayList<CTPhieuNhap> dsct = CTPhieuNhapBUS.getInstance().getListPhieuNhap(maPN);
         if (dsct != null) {
             for (CTPhieuNhap ct : dsct) {
+                System.out.println("found maSP: " + ct.getMaSP());
                 Vector vec = new Vector();
                 vec.add(ct.getMaSP());
                 vec.add(dcf.format(ct.getSoLuong()));
@@ -949,7 +952,7 @@ public class PnQuanLyNhapHangGUI extends javax.swing.JPanel {
         }
     }
 
-    private void btnThemVaoGioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemVaoGioActionPerformed
+    private void btnThemVaoGioActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnThemVaoGioActionPerformed
         int soLuong = 0;
         int donGia = 0;
         try {
@@ -986,9 +989,9 @@ public class PnQuanLyNhapHangGUI extends javax.swing.JPanel {
         } else {
             new Dialog("Chưa chọn sản phẩm để nhập!", Dialog.ERROR_DIALOG);
         }
-    }//GEN-LAST:event_btnThemVaoGioActionPerformed
+    }// GEN-LAST:event_btnThemVaoGioActionPerformed
 
-    private void btnXoaKhoiGioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaKhoiGioActionPerformed
+    private void btnXoaKhoiGioActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnXoaKhoiGioActionPerformed
         int row = tblGioNhap.getSelectedRow();
 
         if (row > -1) {
@@ -996,28 +999,28 @@ public class PnQuanLyNhapHangGUI extends javax.swing.JPanel {
         } else {
             new Dialog("Chưa chọn sao xoá :)", Dialog.ERROR_DIALOG);
         }
-    }//GEN-LAST:event_btnXoaKhoiGioActionPerformed
+    }// GEN-LAST:event_btnXoaKhoiGioActionPerformed
 
-    private void tblKhoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblKhoMouseClicked
+    private void tblKhoMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_tblKhoMouseClicked
         txtDonGia.setText("1");
         txtSoLuong.setText("1");
         tblGioNhap.clearSelection();
-    }//GEN-LAST:event_tblKhoMouseClicked
+    }// GEN-LAST:event_tblKhoMouseClicked
 
-    private void tblGioNhapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblGioNhapMouseClicked
+    private void tblGioNhapMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_tblGioNhapMouseClicked
         tblKho.clearSelection();
         int row = tblGioNhap.getSelectedRow();
         if (row > -1) {
             txtSoLuong.setText(tblGioNhap.getValueAt(row, 2) + "");
             txtDonGia.setText(tblGioNhap.getValueAt(row, 3) + "");
         }
-    }//GEN-LAST:event_tblGioNhapMouseClicked
+    }// GEN-LAST:event_tblGioNhapMouseClicked
 
-    private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
+    private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnTimKiemActionPerformed
         loadDataTableKho(txtTimKiem.getText());
-    }//GEN-LAST:event_btnTimKiemActionPerformed
+    }// GEN-LAST:event_btnTimKiemActionPerformed
 
-    private void btnXacNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacNhanActionPerformed
+    private void btnXacNhanActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnXacNhanActionPerformed
         int row = tblGioNhap.getRowCount();
         if (row < 1) {
             new Dialog("Chưa có gì để nhập hết á!", Dialog.ERROR_DIALOG);
@@ -1038,6 +1041,7 @@ public class PnQuanLyNhapHangGUI extends javax.swing.JPanel {
             int soLuong = Integer.parseInt(tblGioNhap.getValueAt(i, 2) + "");
             int donGia = Integer.parseInt(tblGioNhap.getValueAt(i, 3) + "");
             CTPhieuNhap ctpn = new CTPhieuNhap(0, maSP, soLuong, donGia);
+            // ctPhieuNhapBUS.luuCTPhieuNhap(ctpn);
             dsct.add(ctpn);
         }
         XuatPhieuNhapGUI xuatPhieuNhap = new XuatPhieuNhapGUI(nhaCungCap, nhanVien, dsct);
@@ -1047,9 +1051,9 @@ public class PnQuanLyNhapHangGUI extends javax.swing.JPanel {
             sanPhamBUS.docListSanPham();
             loadDataTableKho();
         }
-    }//GEN-LAST:event_btnXacNhanActionPerformed
+    }// GEN-LAST:event_btnXacNhanActionPerformed
 
-    private void btnChonNhaCungCapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonNhaCungCapActionPerformed
+    private void btnChonNhaCungCapActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnChonNhaCungCapActionPerformed
         DlgChonNhaCungCap dlg = new DlgChonNhaCungCap();
         dlg.setVisible(true);
 
@@ -1058,15 +1062,16 @@ public class PnQuanLyNhapHangGUI extends javax.swing.JPanel {
         } else {
             txtNhaCungCap.setText("");
         }
-    }//GEN-LAST:event_btnChonNhaCungCapActionPerformed
+    }// GEN-LAST:event_btnChonNhaCungCapActionPerformed
 
-    private void tblPhieuNhapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPhieuNhapMouseClicked
+    private void tblPhieuNhapMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_tblPhieuNhapMouseClicked
         int row = tblPhieuNhap.getSelectedRow();
         if (row < 0) {
             return;
         }
         String maPN = tblPhieuNhap.getValueAt(row, 0) + "";
         PhieuNhap pn = phieuNhapBUS.timPhieuNhap(maPN);
+        System.out.println("Clicked maPN: " + pn.getMaPN());
         txtMaPN.setText(pn.getMaPN() + "");
         txtMaNCC.setText(pn.getMaNCC() + "");
         txtMaNV.setText(pn.getMaNV() + "");
@@ -1074,14 +1079,14 @@ public class PnQuanLyNhapHangGUI extends javax.swing.JPanel {
         txtTongTienPN.setText(dcf.format(pn.getTongTien()));
 
         loadDataTableCTPhieuNhap(maPN);
-    }//GEN-LAST:event_tblPhieuNhapMouseClicked
+    }// GEN-LAST:event_tblPhieuNhapMouseClicked
 
-    private void btnResetTabXemLaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetTabXemLaiActionPerformed
+    private void btnResetTabXemLaiActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnResetTabXemLaiActionPerformed
         loadDataTableCTPhieuNhap();
         loadDataTablePhieuNhap();
-    }//GEN-LAST:event_btnResetTabXemLaiActionPerformed
+    }// GEN-LAST:event_btnResetTabXemLaiActionPerformed
 
-    private void tblCTPhieuNhapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCTPhieuNhapMouseClicked
+    private void tblCTPhieuNhapMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_tblCTPhieuNhapMouseClicked
         int row = tblCTPhieuNhap.getSelectedRow();
         if (row < 0) {
             return;
@@ -1091,31 +1096,31 @@ public class PnQuanLyNhapHangGUI extends javax.swing.JPanel {
         txtCTSoLuong.setText(tblCTPhieuNhap.getValueAt(row, 1) + "");
         txtCTDonGia.setText(tblCTPhieuNhap.getValueAt(row, 2) + "");
         txtCTThanhTien.setText(tblCTPhieuNhap.getValueAt(row, 3) + "");
-    }//GEN-LAST:event_tblCTPhieuNhapMouseClicked
+    }// GEN-LAST:event_tblCTPhieuNhapMouseClicked
 
-    private void txtGiaThapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtGiaThapActionPerformed
+    private void txtGiaThapActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_txtGiaThapActionPerformed
         txtGiaCao.requestFocus();
-    }//GEN-LAST:event_txtGiaThapActionPerformed
+    }// GEN-LAST:event_txtGiaThapActionPerformed
 
-    private void txtGiaCaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtGiaCaoActionPerformed
+    private void txtGiaCaoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_txtGiaCaoActionPerformed
         loadDataTablePhieuNhapTheoGia(txtGiaThap.getText(), txtGiaCao.getText());
-    }//GEN-LAST:event_txtGiaCaoActionPerformed
+    }// GEN-LAST:event_txtGiaCaoActionPerformed
 
-    private void txtTuNgayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTuNgayActionPerformed
+    private void txtTuNgayActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_txtTuNgayActionPerformed
         txtDenNgay.requestFocus();
-    }//GEN-LAST:event_txtTuNgayActionPerformed
+    }// GEN-LAST:event_txtTuNgayActionPerformed
 
-    private void txtDenNgayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDenNgayActionPerformed
+    private void txtDenNgayActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_txtDenNgayActionPerformed
         loadDataTablePhieuNhapTheoNgay(txtTuNgay.getText(), txtDenNgay.getText());
-    }//GEN-LAST:event_txtDenNgayActionPerformed
+    }// GEN-LAST:event_txtDenNgayActionPerformed
 
-    private void btnResetKhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetKhoActionPerformed
+    private void btnResetKhoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnResetKhoActionPerformed
         sanPhamBUS.docListSanPham();
         loadDataTableKho();
         dtmGioNhap.setRowCount(0);
-    }//GEN-LAST:event_btnResetKhoActionPerformed
+    }// GEN-LAST:event_btnResetKhoActionPerformed
 
-// <editor-fold defaultstate="collapsed" desc="Variable">
+    // <editor-fold defaultstate="collapsed" desc="Variable">
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnChonNhaCungCap;
     private javax.swing.JButton btnResetKho;
@@ -1201,6 +1206,6 @@ public class PnQuanLyNhapHangGUI extends javax.swing.JPanel {
     private javax.swing.JTextField txtTongTienPN;
     private javax.swing.JTextField txtTuNgay;
     // End of variables declaration//GEN-END:variables
-    //</editor-fold>
+    // </editor-fold>
 
 }

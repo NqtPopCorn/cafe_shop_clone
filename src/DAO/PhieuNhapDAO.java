@@ -10,6 +10,17 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class PhieuNhapDAO {
+    private static PhieuNhapDAO instance;
+
+    public static PhieuNhapDAO getInstance() {
+        if (instance == null) {
+            instance = new PhieuNhapDAO();
+        }
+        return instance;
+    }
+
+    private PhieuNhapDAO() {
+    }
 
     public ArrayList<PhieuNhap> getListPhieuNhap() {
         ArrayList<PhieuNhap> dspn = new ArrayList<>();
@@ -41,11 +52,11 @@ public class PhieuNhapDAO {
             PreparedStatement prep = MyConnect.conn.prepareStatement(sql);
             prep.setInt(1, pn.getMaNCC());
             prep.setInt(2, pn.getMaNV());
-            
+
             Date date = new Date();
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss") ;
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String currentDateTime = format.format(date);
-            
+
             prep.setString(3, currentDateTime);
             prep.setInt(4, pn.getTongTien());
             result = prep.executeUpdate() > 0;
